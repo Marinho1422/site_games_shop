@@ -1,0 +1,110 @@
+    <!doctype html>
+    <html lang="pt-BR">
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Agendamento - LogiLink</title>
+    <link rel="stylesheet" href="main.css" />
+    </head>
+    <body>
+    <div class="container">
+        <header>
+        <div class="header-content">
+            <div class="logo-container">
+            <!-- Mesmo logo do index (SVG inline) -->
+            <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                <linearGradient id="logoGradientAg" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#602468;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ef303f;stop-opacity:1" />
+                </linearGradient>
+                </defs>
+                <circle cx="50" cy="50" r="45" fill="url(#logoGradientAg)" opacity="0.2" />
+                <path d="M 30 35 L 70 35 L 70 45 L 40 45 L 40 55 L 65 55 L 65 65 L 30 65 Z" fill="url(#logoGradientAg)"/>
+                <circle cx="72" cy="72" r="8" fill="#ef303f" />
+            </svg>
+
+            <div class="company-info">
+                <h1 id="company-name-small">LogiLink</h1>
+                <p id="tagline-small">Soluções em Logística</p>
+            </div>
+            </div>
+
+            <nav>
+            <ul>
+                <li><a href="index.html">Voltar</a></li>
+            </ul>
+            </nav>
+
+            <button class="mobile-menu-toggle" aria-label="Abrir menu">☰</button>
+        </div>
+        </header>
+
+        <main style="margin-top:100px;">
+        <section class="section" id="agendar-section">
+            <div class="section-content" style="max-width:800px; margin:0 auto;">
+            <h2 class="section-title">Agendamento de Carregamento</h2>
+            <p>Preencha os dados para agendar o carregamento e descarregamento.</p>
+
+            <form id="form-agendar" class="contact-form" style="margin-top:1.5rem;">
+                <div class="form-group">
+                <label for="codigo-empresa">Código da Empresa</label>
+                <input id="codigo-empresa" type="text" required />
+                </div>
+
+                <div class="form-group">
+                <label for="cnpj">CNPJ (somente números)</label>
+                <input id="cnpj" type="text" inputmode="numeric" pattern="\d{14}" title="14 dígitos sem pontuação" required />
+                </div>
+
+                <div class="form-group">
+                <label for="dt-carregamento">Data e hora do carregamento</label>
+                <input id="dt-carregamento" type="datetime-local" required />
+                </div>
+
+                <div class="form-group">
+                <label for="dt-descarregamento">Data e hora do descarregamento</label>
+                <input id="dt-descarregamento" type="datetime-local" required />
+                </div>
+
+                <div class="form-group">
+                <label for="local-descarregamento">Local do Descarregamento:</label>
+                <input 
+                type="text" 
+                id="local-descarregamento" 
+                required
+                placeholder="Exemplo: Transportadora LogLink, Avenida Paulista, 1500, Bela Vista, São Paulo, SP, 01310-100">
+
+                </div>
+
+                <div class="form-group">
+                <label for="pin">PIN de confiabilidade e originalidade</label>
+                <input id="pin" type="text" required />
+                </div>
+
+                <div class="form-group">
+                <label for="senha-unica">Senha única de acesso</label>
+                <input id="senha-unica" type="password" required />
+                </div>
+
+                <div style="display:flex; gap:12px; justify-content:center; margin-top:12px;">
+                <button type="submit" class="btn btn-primary">Confirmar Agendamento</button>
+                <button type="reset" class="btn btn-secondary">Limpar</button>
+                </div>
+
+                <div id="agendar-feedback" style="text-align:center; margin-top:12px; color:#333;"></div>
+            </form>
+            </div>
+        </section>
+        </main>
+
+        <footer style="margin-top:2rem;">
+        <div class="footer-content">
+            <p>© 2025 LogiLink. Todos os direitos reservados.</p>
+        </div>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+    </body>
+    </html>
