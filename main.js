@@ -73,34 +73,49 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      // Datas e horas
-      const agora = new Date();
-      const dataCarrega = new Date(dtCarrega);
-      const dataDescarrega = new Date(dtDescarrega);
+      // ---------- parsing seguro para datetime-local ----------
+function parseDateTimeLocal(value) {
+  if (!value || typeof value !== 'string') return NaN;
+  const [datePart, timePart] = value.split('T');
+  if (!datePart || !timePart) return NaN;
 
-      if (isNaN(dataCarrega) || isNaN(dataDescarrega)) {
-        alert("Preencha corretamente as datas e horas.");
-        return;
-      }
+  const [year, month, day] = datePart.split('-').map(Number);
+  const [hour, minute] = timePart.split(':').map(Number);
 
-      if (dataCarrega < agora) {
-        alert("A data/hora de carregamento não pode ser anterior ao momento atual.");
-        return;
-      }
+  return new Date(year, month - 1, day, hour, minute);
+}
 
-      const diffMs = dataDescarrega - dataCarrega;
-      const diffMin = diffMs / (1000 * 60);
-      if (diffMin < 90) {
-        alert("O intervalo entre carregamento e descarregamento deve ser de pelo menos 1 hora e 30 minutos.");
-        return;
-      }
+// ---------- Validação das datas ----------
+const agora = new Date();
+const dataCarrega = parseDateTimeLocal(dtCarrega);
+const dataDescarrega = parseDateTimeLocal(dtDescarrega);
 
-      // Local do descarregamento: Nome, logradouro, número, bairro, cidade, UF e CEP (mínimo)
-      const padraoLocal = /^([^,]+,){4,}[^,]+$/;
-      if (!padraoLocal.test(localDesc)) {
-        alert("O local do descarregamento deve conter: Nome do destinatário, logradouro, número, bairro, cidade, UF e CEP.");
-        return;
-      }
+if (isNaN(dataCarrega.getTime()) || isNaN(dataDescarrega.getTime())) {
+  alert("Preencha corretamente as datas e horas.");
+  return;
+}
+
+// Verifica se carregamento é no futuro
+if (dataCarrega.getTime() < agora.getTime()) {
+  alert("A data/hora de carregamento não pode ser anterior ao momento atual.");
+  return;
+}
+
+// Verifica se descarregamento é depois do carregamento
+if (dataDescarrega.getTime() <= dataCarrega.getTime()) {
+  alert("A data/hora de descarregamento deve ser posterior à do carregamento.");
+  return;
+}
+
+// Verifica diferença mínima de 1h30
+const diffMs = dataDescarrega.getTime() - dataCarrega.getTime();
+const diffMin = diffMs / (1000 * 60);
+
+if (diffMin < 90) {
+  alert("O intervalo entre carregamento e descarregamento deve ser de pelo menos 1 hora e 30 minutos.");
+  return;
+}
+
 
       // PIN de confiabilidade: 3 dígitos
       if (!/^\d{3}$/.test(pin)) {
@@ -141,3 +156,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
